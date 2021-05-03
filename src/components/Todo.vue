@@ -10,8 +10,11 @@
             </div>
 
             <div class="extra-content">
-                <span class="edit-icon clickable" v-on:click="showForm">
+                <span class="edit-icon clickable" @click="showForm">
                     ⚙️
+                </span>
+                <span class="delete-icon clickable" @click="deleteTodo(todo)">
+                    ❌
                 </span>
 
             </div>
@@ -31,7 +34,7 @@
                 </div>
 
                 <div class="close">
-                    <button class="clickable" v-on:click="hideForm">
+                    <button class="clickable" @click="hideForm">
                         Close
                     </button>
                 </div>
@@ -65,6 +68,9 @@ export default {
         },
         hideForm() {
             this.isEditing = false;
+        },
+        deleteTodo(todo) {
+            this.$emit('delete-todo', todo);
         },
     },
 };
