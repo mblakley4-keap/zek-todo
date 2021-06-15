@@ -6,7 +6,7 @@
             </div>
 
             <div class="meta">
-                {{ todo.project }}
+                {{ todo.description }}
             </div>
 
             <div class="extra-content">
@@ -29,8 +29,8 @@
                 </div>
 
                 <div class="field">
-                    <label for="todo.project">Project</label>
-                    <input type="text" v-model="todo.project">
+                    <label for="todo.project">Description</label>
+                    <input type="text" v-model="todo.description">
                 </div>
 
                 <div class="close">
@@ -43,11 +43,11 @@
         </div>
 
 
-        <div class="status" v-show="todo.done">
+        <div class="status clickable" v-show="todo.done" @click="completeTodo(todo)">
             🟢 Complete
         </div>
 
-        <div class="status" v-show="!todo.done">
+        <div class="status clickable" v-show="!todo.done" @click="completeTodo(todo)">
             🔴 Not Complete
         </div>
 
@@ -71,6 +71,9 @@ export default {
         },
         deleteTodo(todo) {
             this.$emit('delete-todo', todo);
+        },
+        completeTodo(todo) {
+            this.$emit('complete-todo', todo);
         },
     },
 };

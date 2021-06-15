@@ -17,10 +17,11 @@
             }}
         </p>
         <todo 
-            v-for="todo in todos" 
-            :key="todo" 
+            v-for="(todo, i) in todos" 
+            :key="i" 
             :todo="todo"
             v-on:delete-todo="deleteTodo"
+            v-on:complete-todo="completeTodo"
         />
         
     </div>
@@ -38,6 +39,11 @@ export default {
         deleteTodo(todo) {
             const todoIndex = this.todos.indexOf(todo);
             this.todos.splice(todoIndex, 1);
+        },
+        
+        completeTodo(todo) {
+            const todoIndex = this.todos.indexOf(todo);
+            this.todos[todoIndex].done = !this.todos[todoIndex].done;
         }
     }
 };

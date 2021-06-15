@@ -1,44 +1,58 @@
 <template>
     <div id="app">
       <h1>todos</h1>
+      <create-todo v-on:add-todo='addTodo'></create-todo>
       <todo-list :todos="todos"></todo-list>
     </div>
 </template>
 
 <script>
 import TodoList from "./components/TodoList";
+import CreateTodo from "./components/CreateTodo";
 
 export default {
     name: "App",
     components: {
         TodoList,
+        CreateTodo,
     },
     data() {
         return {
           todos: [
             {
               title: 'Todo A',
-              project: 'Project A',
+              description: 'the first todo',
               done: false,
             },
             {
               title: 'Todo B',
-              project: 'Project B',
+              description: 'the second todo',
               done: false,
             },
             {
               title: 'Todo C',
-              project: 'Project C',
+              description: 'the third todo',
               done: false,
             },
             {
               title: 'Todo D',
-              project: 'Project D',
+              description: 'the fourth todo',
               done: false,
             }
           ]
         };
     },
+
+    methods: {
+      addTodo(payload) {
+        const { title, description = "" } = payload;
+        this.todos.push({
+          title,
+          description,
+          done: false,
+        })
+      }
+    }
 };
 </script>
 
