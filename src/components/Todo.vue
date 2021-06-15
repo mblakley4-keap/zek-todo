@@ -84,7 +84,6 @@ export default {
     margin: 10px auto;
     padding: 5px;
     border: 1px solid green;
-    width: 25%;
     border-radius: 10px;
 }
 .header {

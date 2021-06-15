@@ -32,9 +32,11 @@ export default {
 
 <style>
     .create-todo-input {
-        width: 80%;
+        width: 75%;
         padding: 15px 30px;
         font-size: 2em;
+        font-weight: 200;
+        font-style: italic;
         border: none;
         color: #EAEBED;
         background: #006989;
@@ -48,6 +50,8 @@ export default {
 
     ::placeholder {
         color: #A3BAC3;
+        font-weight: 200;
+        font-style: italic;
     }
 
 </style>
