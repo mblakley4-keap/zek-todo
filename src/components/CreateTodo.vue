@@ -1,74 +1,53 @@
 <template>
-  <div class='create-form-container'>
-      <button @click='openForm' v-show='!isCreating'>
-          <i>Add Todo</i>
-      </button>
-      <div class='card' v-show='isCreating'>
-          <div class='content'>
-              <div class='form'>
-                  <div class='field'>
-                      <label for='title'>Title</label>
-                      <input id='title' type="text" v-model='newTitle' ref='title' defaultValue=''>
-                  </div>
-
-                  <div class='field'>
-                      <label for='description'>Description</label>
-                      <input id='description' type="text" v-model='newDescription' ref='description' defaultValue=''>
-                  </div>
-
-                  <div class='button-container'>
-                      <button @click='sendForm()'>
-                          Create
-                      </button>
-                     
-                      <button @click='closeForm()'>
-                          Cancel
-                      </button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    <input 
+        type='text'
+        autofocus
+        v-model='newTodo'
+        class='create-todo-input'
+        placeholder='Make a todo'
+        @keyup.enter='addTodo'
+    />
 </template>
 
 <script>
 export default {
     data() {
         return {
-            newTitle: '',
-            newDescription: '',
-            isCreating: false,
+            newTodo: "",
         };
     },
 
     methods: {
-        openForm() {
-            this.isCreating = true;
-        },
+        addTodo() {
+            const value = this.newTodo.trim();
 
-        closeForm() {
-            this.isCreating = false;
-        },
-
-        sendForm() {
-            if (this.newTitle.length > 0) {
-                const title = this.newTitle;
-
-                const description = this.newDescription;
-
-                this.$emit('add-todo', {
-                    title,
-                    description,
-                });
-                this.isCreating = false;
-                this.newTitle = '';
-                this.newDescription = '';
-            } else alert('Please add a title')
-        },
+            if (!value) return;
+            
+            this.$emit('add-todo');
+            this.newTodo = "";
+        }
     },
 };
 </script>
 
 <style>
+    .create-todo-input {
+        width: 80%;
+        padding: 15px 30px;
+        font-size: 2em;
+        border: none;
+        color: #EAEBED;
+        background: #006989;
+        box-shadow: 1px 1px 5px 1px #A3BAC3;
+        border-radius: 10px;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    ::placeholder {
+        color: #A3BAC3;
+    }
 
 </style>
