@@ -3,7 +3,10 @@
       <h1>todos</h1>
       <create-todo v-on:add-todo='addTodo'></create-todo>
       <section class="main-container" v-show="todos.length">
-        <filter-menu :todos="todos"></filter-menu>
+        <filter-menu 
+          :todos="todos" 
+          :visibility="visibility"
+        />
         <todo-list :todos="todos"></todo-list>
       </section>
     </div>
@@ -26,6 +29,7 @@ export default {
     data() {
         return {
           todos: [],
+          visibility: "all",
         };
     },
 
@@ -34,8 +38,11 @@ export default {
     },
 
     watch: {
-      todos(todos) {
-        localStorage.setItem(TODO_STORE_KEY, JSON.stringify(todos))
+      todos: {
+        handler: function(todos) {
+          localStorage.setItem(TODO_STORE_KEY, JSON.stringify(todos))
+        },
+        deep: true,
       },
     },
 
@@ -81,7 +88,7 @@ h1 {
   text-align: left;
   width: 80%;
   display: grid;
-  grid-template-columns: 35% 65%;
-  column-gap: 1em;
+  grid-template-columns: 33% 65%;
+  column-gap: 2%;
 }
 </style>

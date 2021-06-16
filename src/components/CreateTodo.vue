@@ -23,7 +23,7 @@ export default {
 
             if (!value) return;
             
-            this.$emit('add-todo');
+            this.$emit('add-todo', this.newTodo);
             this.newTodo = "";
         }
     },

@@ -1,27 +1,12 @@
 <template>
     <div class="card">
-        <div class="content" v-show="!isEditing">
-            <div class="header">
-                {{ todo.title }}
-            </div>
-
-            <div class="meta">
-                {{ todo.description }}
-            </div>
-
-            <div class="extra-content">
-                <span class="edit-icon clickable" @click="showForm">
-                    ⚙️
-                </span>
-                <span class="delete-icon clickable" @click="deleteTodo(todo)">
-                    ❌
-                </span>
-
-            </div>
-
+        <div class="content" v-show="!editing">
+            <input type="checkbox" class="circle" @click="completeTodo(todo)" v-model="todo.done" />
+            <label >{{ todo.title }}</label>
+            <button class="delete" @click="deleteTodo(todo)">X</button>
         </div>
 
-        <div class="content" v-show="isEditing">
+        <div class="content" v-show="editing">
             <div class="form">
                 <div class="field">
                     <label for="todo.title">Title</label>
@@ -43,13 +28,13 @@
         </div>
 
 
-        <div class="status clickable" v-show="todo.done" @click="completeTodo(todo)">
+        <!-- <div class="status clickable" v-show="todo.done" @click="completeTodo(todo)">
             🟢 Complete
         </div>
 
         <div class="status clickable" v-show="!todo.done" @click="completeTodo(todo)">
             🔴 Not Complete
-        </div>
+        </div> -->
 
     </div>
 </template>
@@ -59,15 +44,15 @@ export default {
     props: ["todo"],
     data () {
         return {
-            isEditing: false,
+            editing: false,
         };
     },
     methods: {
         showForm() {
-            this.isEditing = true;
+            this.editing = true;
         },
         hideForm() {
-            this.isEditing = false;
+            this.editing = false;
         },
         deleteTodo(todo) {
             this.$emit('delete-todo', todo);
@@ -81,30 +66,38 @@ export default {
 
 <style>
 .card {
-    margin: 10px auto;
-    padding: 5px;
-    border: 1px solid green;
+    margin: 0 auto 5px;
+    padding: 10px;
+    border: 1px solid #EAEBED;
     border-radius: 10px;
 }
-.header {
-    font-size: 20px;
-    font-weight: 600;
+
+.circle {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
 }
+
+.circle:checked {
+    background: #A3BAC3;
+}
+
+
 .content {
-    text-align: left;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    font-size: 1.5em;
 }
-.extra-content {
-    text-align: right;
-}
+
 .clickable:hover {
     cursor: pointer;
 }
-.status {
-    text-align: left;
-}
-.close {
-    text-align: right;
-}
+
 input {
     margin: 5px;
     padding: 5px;
