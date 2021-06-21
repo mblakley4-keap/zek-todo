@@ -3,9 +3,29 @@
         <h2>
             {{ this.pending }} {{ this.pending | pluralize }} remaining
         </h2>
-        <p>All</p>
-        <p :class="{ selected: visibility === 'all'}">Active</p>
-        <p>Completed</p>
+        <p 
+            :class="{ selected: visibility === 'all'}"
+            class="clickable"
+            @click="filterTodoList('all')"
+        >
+            All
+        </p>
+        
+        <p 
+            :class="{ selected: visibility === 'active'}"
+            class="clickable"
+            @click="filterTodoList('active')"
+        >
+            Active
+        </p>
+
+        <p 
+            :class="{ selected: visibility === 'completed'}"
+            class="clickable"
+            @click="filterTodoList('completed')"
+        >
+            Completed
+        </p>
   </div>
 </template>
 
@@ -27,6 +47,12 @@ export default {
         },
     },
 
+    methods: {
+        filterTodoList(status) {
+            this.$emit('filter-todo-list', status);
+        },
+    },
+
     filters: {
         pluralize(x) {
             return x === 1 ? "task" : "tasks"
@@ -42,5 +68,16 @@ export default {
         height: 10vh; */
         padding: 15px;
     }
+
+    .selected {
+        color: #2c3e50;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+    .clickable:hover {
+    cursor: pointer;
+    color: #A3BAC3;
+}
 
 </style>

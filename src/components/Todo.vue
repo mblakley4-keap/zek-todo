@@ -24,18 +24,7 @@
                     </button>
                 </div>
             </div>
-
         </div>
-
-
-        <!-- <div class="status clickable" v-show="todo.done" @click="completeTodo(todo)">
-            🟢 Complete
-        </div>
-
-        <div class="status clickable" v-show="!todo.done" @click="completeTodo(todo)">
-            🔴 Not Complete
-        </div> -->
-
     </div>
 </template>
 
@@ -94,8 +83,16 @@ export default {
     font-size: 1.5em;
 }
 
-.clickable:hover {
+.clickable:hover, .delete:hover {
     cursor: pointer;
+}
+
+.delete {
+    color: rgb(182, 79, 79);
+    border: none;
+    font-weight: 600;
+    font-size: 1em;
+    background-color: white;
 }
 
 input {

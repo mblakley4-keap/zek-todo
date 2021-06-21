@@ -6,8 +6,9 @@
         <filter-menu 
           :todos="todos" 
           :visibility="visibility"
+          v-on:filter-todo-list="filterTodoList"
         />
-        <todo-list :todos="todos"></todo-list>
+        <todo-list :todos="filteredTodos"></todo-list>
       </section>
     </div>
 </template>
@@ -30,6 +31,7 @@ export default {
         return {
           todos: [],
           visibility: "all",
+          filteredTodos: [],
         };
     },
 
@@ -40,7 +42,8 @@ export default {
     watch: {
       todos: {
         handler: function(todos) {
-          localStorage.setItem(TODO_STORE_KEY, JSON.stringify(todos))
+          localStorage.setItem(TODO_STORE_KEY, JSON.stringify(todos));
+          this.filterTodoList(this.visibility);
         },
         deep: true,
       },
@@ -53,6 +56,7 @@ export default {
           todo.id = i;
         });
         this.todos = todos;
+        this.filteredTodos = todos;
       },
 
       addTodo(title) {
@@ -61,6 +65,20 @@ export default {
           title,
           done: false,
         });
+      },
+
+      filterTodoList(status) {
+        if (this.visibility !== status) {
+          this.visibility = status;
+        }
+
+        if (status === 'completed') {
+          return this.filteredTodos = this.todos.filter(todo => todo.done)
+        } else if (status === 'active') {
+            return this.filteredTodos = this.todos.filter((todo => !todo.done))
+        } else {
+          return this.filteredTodos = this.todos;
+        }
       },
     },
 };
