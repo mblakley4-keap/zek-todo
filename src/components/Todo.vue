@@ -2,32 +2,34 @@
     <div class="card">
         <div class="content" v-show="!editing">
             <input type="checkbox" class="circle" @click="completeTodo(todo)" v-model="todo.done" />
-            <label @dblclick="editTodo">{{ todo.title }}</label>
+            <label @dblclick="editTodo" :class="{ strike: todo.done }">{{ todo.title }}</label>
             <button class="delete" @click="deleteTodo(todo)">X</button>
         </div>
 
-        <div class="content" v-show="editing">
+        <div class="content" v-if="editing">
             <div></div>
-            <input 
-                type="text"
-                v-model="editedTitle"
-                class='edit-todo-input'
-                @blur="editCancel()"
-                @keyup.enter="editDone(todo)"
-                @keyup.esc="editCancel()"
+            <edit-todo
+                :todo="todo"
+                v-on:edit-done="editDone"
+                v-on:edit-cancel="editCancel"
             />
-            <label for="todo.title"></label>
         </div>
 
     </div>
 </template>
 
 <script>
+import EditTodo from './EditTodo'
+
 export default {
     props: ["todo"],
+
+    components: {
+        EditTodo,
+    },
+
     data () {
         return {
-            editedTitle: "",
             editing: false,
         };
     },
@@ -41,28 +43,23 @@ export default {
         },
 
         editTodo() {
-            this.editedTitle = this.todo.title;
             this.editing = true;
         },
 
-        editDone(todo) {
-            const value = this.editedTitle.trim();
+        editDone(editedTitle) {
+            const value = editedTitle.trim();
             
             if (!value) {
-                this.editedTitle = "";
                 this.editing = false;
                 return
             }
 
-            todo.title = value;
+            this.todo.title = value;
             
-            this.editedTitle = "";
-
             this.editing = false;
         },
 
         editCancel() {
-            this.editedTitle = "";
             this.editing = false;
         }
     },
@@ -123,6 +120,10 @@ export default {
         outline: none;
         border-radius: 10px;
         cursor: pointer;
+    }
+
+    .strike {
+        text-decoration: line-through;
     }
 
     input {
