@@ -3,28 +3,37 @@
         <h2>
             {{ this.pending }} {{ this.pending | pluralize }} remaining
         </h2>
-        <p 
-            :class="{ selected: visibility === 'all'}"
-            class="clickable"
-            @click="filterTodoList('all')"
-        >
-            All
+        <p>
+            <a 
+                href="#/all" 
+                :class="{ selected: visibility === 'all'}"
+                class="clickable" 
+                @click="filterTodoList('all')"
+            >
+                All
+            </a>
         </p>
         
-        <p 
-            :class="{ selected: visibility === 'active'}"
-            class="clickable"
-            @click="filterTodoList('active')"
-        >
-            Active
+        <p>
+            <a 
+                href="#/active"
+                :class="{ selected: visibility === 'active'}"
+                class="clickable"
+                @click="filterTodoList('active')"
+            >
+                Active
+            </a>
         </p>
 
-        <p 
-            :class="{ selected: visibility === 'completed'}"
-            class="clickable"
-            @click="filterTodoList('completed')"
-        >
-            Completed
+        <p>
+            <a 
+                href="#Completed"
+                :class="{ selected: visibility === 'completed'}"
+                class="clickable"
+                @click="filterTodoList('completed')"
+            >
+                Completed
+            </a>
         </p>
   </div>
 </template>
@@ -70,14 +79,19 @@ export default {
     }
 
     .selected {
-        color: #2c3e50;
-        text-decoration: underline;
+        color: #2c3e50 !important;
+        text-decoration: underline !important;
         font-weight: 500;
     }
 
-    .clickable:hover {
-    cursor: pointer;
-    color: #A3BAC3;
-}
+    a:link, a:visited {
+        color: #A3BAC3;
+        text-decoration: none;
+    }
+
+    a:hover {
+        cursor: pointer;
+        color: #2c3e50;
+    }
 
 </style>
